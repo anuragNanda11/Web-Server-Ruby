@@ -1,0 +1,4 @@
+AuthUserFile "public/public_html/protected/.htpasswd"
+AuthType Basic
+AuthName "Authorized users only."
+Require valid-user

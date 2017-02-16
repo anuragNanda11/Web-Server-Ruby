@@ -1,0 +1,12 @@
+#!/bin/bash
+
+curl -i -v http://localhost:2345/ && echo "done1" &
+curl -i -v http://localhost:2345/ && echo "done2" &
+curl -i -v http://localhost:2345/ && echo "done3" &
+curl -i -v http://localhost:2345/ && echo "done4" &
+curl -i -v http://localhost:2345/ && echo "done5" &
+curl -i -v http://localhost:2345/ && echo "done6" &
+curl -i -v http://localhost:2345/ && echo "done7" &
+curl -i -v http://localhost:2345/ && echo "done8" &
+
+wait

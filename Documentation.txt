@@ -1,0 +1,77 @@
+Test Plan:
+
+
+Unit/Integration tests
+Before integrating all the code, we used driver programs to test various classes or groups of classes in isolation, for example:
+
+mime_types = MimeTypes.new( lines_from_mime_types )
+mime_types.load
+assert_equal(mime_types.get("html"), "text/html")
+
+System tests
+Done using curl and ruby's Net::HTTP class.
+
+
+GET
+Verify that code 404 is returned as a result of of a request for a missing file.
+Verify that code 200 and the file body is returned in response to a valid request.
+
+Root directory:
+curl localhost:2345/index.html
+curl localhost:2345
+
+Subdirectory:
+curl localhost:2345/subdir/index.html
+curl localhost:2345/subdir/
+
+Alias:
+curl localhost:2345/aliastest/index.html
+curl localhost:2345/aliastest/
+
+ScriptAlias:
+script alias directory is correctly resolved, the specified script is executed, and the script output is returned in the response.
+curl localhost:2345/cgi-bin/script.pl
+
+
+Htaccess:
+curl localhost:2345/protected/index.html
+curl localhost:2345/protected/
+
+Request for a protected resource without auth header should result
+in status code 401.
+
+Request for a protected resource with incorrect username/password in auth header should result in status code 403.
+
+Request for a protected resource with valid username/password in auth header should be granted.
+
+PUT
+Verify that this request creates or replaces the file with the given URI and content and response status is 201.
+
+POST
+Verify that code 404 is returned as a result of of a request for a missing file.
+Verify that code 200 and the file body is returned in response to a valid request.
+
+HEAD
+Verify that code 404 is returned as a result of of a request for a missing file.
+Verify that code 200 in response to a valid request.
+Response has no body, but the file size of the file in request URI is specified in Content-Length header.
+
+Status code 400
+Try the following (at least Google web servers return status 400 as a result of this request sent to google.com:80 from Netcat):
+Use the netcat utility to send a garbled HTTP request, and verify a response with status 400:
+
+$nc localhost 2345
+
+Paste the following garbled request to console (this worked on Mac):
+
+/ HTTP/1.1
+User-Agent: curl/7.24.0 (x86_64-apple-darwin12.0) libcurl/7.24.0 OpenSSL/0.9.8x zlib/1.2.5
+Host: www.google.com
+Accept: */*
+
+Status code 500
+
+We can try something like the following:
+
+In httpd.conf, specify an alias without a path.
+Implement alias handling so that this causes a compile error (like "undefined method for nil:NilClass"). Implement exception handling in WebServer or Worker so that a 500 status response is returned if this error happens. From client, make a request for the alias without a path. Verify status 500.

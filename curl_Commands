@@ -1,0 +1,32 @@
+
+down vote
+For a RESTful HTTP POST containing XML:
+
+curl --verbose -X POST -d @/Users/user/test.txt http://localhost:2345/anything --header "Content-Type:text/xml"
+
+
+curl --verbose --form "fileupload=@/Users/user/test.txt" http://localhost:2345/public
+
+ curl -i -v http://localhost:2345/
+ curl -i -v http://localhost:2345/protected
+
+  curl -i -v http://localhost:2345/perl-env/
+
+
+   curl -i -v  --request PLT http://localhost:2345
+
+
+
+
+ curl -v --head http://localhost:2345/
+
+
+
+ curl --verbose -X DELETE http://localhost:2345/ter.txt
+
+
+
+     curl -i --header 'If-Modified-Since: Mon, 14 Mar 2016 02:45:29 GMT' http://localhost:2345
+
+
+curl -i --header 'Authorization: Mon, 14 Mar 2016 02:45:29 GMT' http://localhost:2345/protected
